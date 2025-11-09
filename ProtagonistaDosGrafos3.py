@@ -1,14 +1,14 @@
 import sys
 
 def criar_grafo():
-    """Cria e retorna um grafo vazio (lista de adjacência)."""
+
     grafo = {}
     vertices = []
     return grafo, vertices
 
 
 def inserir_vertice(grafo, vertices, vertice):
-    """Adiciona um novo vértice ao grafo."""
+
     if vertice not in vertices:
         vertices.append(vertice)
         grafo[vertice] = []
@@ -18,7 +18,7 @@ def inserir_vertice(grafo, vertices, vertice):
 
 
 def remover_vertice(grafo, vertices, vertice):
-    """Remove um vértice e todas as arestas associadas."""
+
     if vertice not in vertices:
         print(f"Vértice '{vertice}' não existe.")
         return
@@ -26,7 +26,7 @@ def remover_vertice(grafo, vertices, vertice):
     vertices.remove(vertice)
     grafo.pop(vertice, None)
 
-    # Remove arestas de entrada que apontavam para o vértice removido
+
     for v in grafo:
         if vertice in grafo[v]:
             grafo[v].remove(vertice)
@@ -35,18 +35,18 @@ def remover_vertice(grafo, vertices, vertice):
 
 
 def inserir_aresta(grafo, vertices, origem, destino, nao_direcionado=False):
-    """Adiciona uma aresta entre dois vértices."""
-    # Garante que os vértices existam antes de criar a aresta
+
+
     if origem not in vertices:
         inserir_vertice(grafo, vertices, origem)
     if destino not in vertices:
         inserir_vertice(grafo, vertices, destino)
 
-    # Adiciona a aresta de saída
+
     if destino not in grafo[origem]:
         grafo[origem].append(destino)
 
-    # Se não direcionado, adiciona a aresta de volta
+
     if nao_direcionado and origem not in grafo[destino]:
         grafo[destino].append(origem)
 
@@ -54,20 +54,19 @@ def inserir_aresta(grafo, vertices, origem, destino, nao_direcionado=False):
 
 
 def remover_aresta(grafo, vertices, origem, destino, nao_direcionado=False):
-    """Remove uma aresta entre dois vértices."""
+
     if origem in grafo and destino in grafo[origem]:
         grafo[origem].remove(destino)
         print(f"Aresta '{origem} -> {destino}' removida com sucesso!")
     else:
         print(f"Aresta '{origem} -> {destino}' não existe.")
-    
-    # Se não direcionado, remove a aresta de volta
+
     if nao_direcionado and destino in grafo and origem in grafo[destino]:
         grafo[destino].remove(origem)
 
 
 def existe_aresta(grafo, vertices, origem, destino):
-    """Verifica se existe uma aresta direta entre dois vértices."""
+
     if origem not in vertices or destino not in vertices:
         print("Um ou ambos os vértices não existem.")
         return False
@@ -77,7 +76,7 @@ def existe_aresta(grafo, vertices, origem, destino):
 
 
 def vizinhos(grafo, vertices, vertice):
-    """Retorna os vizinhos de um vértice."""
+
     if vertice not in vertices:
         print(f"Vértice '{vertice}' não existe.")
         return []
@@ -85,13 +84,13 @@ def vizinhos(grafo, vertices, vertice):
 
 
 def listar_vizinhos(grafo, vertices, vertice):
-    """Lista e exibe os vizinhos de um vértice."""
+
     viz = vizinhos(grafo, vertices, vertice)
     print(f"Vizinhos de '{vertice}': {viz}")
 
 
 def grau_vertices(grafo, vertices):
-    """Calcula e exibe o grau de entrada, saída e total de cada vértice."""
+
     print("\n--- Graus dos Vértices ---")
     if not vertices:
         print("O grafo está vazio.")
@@ -99,7 +98,7 @@ def grau_vertices(grafo, vertices):
         
     for v in vertices:
         saida = len(grafo[v])
-        # Calcula o grau de entrada
+
         entrada = 0
         for u in vertices:
             if v in grafo[u]:
@@ -111,14 +110,13 @@ def grau_vertices(grafo, vertices):
 
 
 def percurso_valido(grafo, vertices, caminho):
-    """Verifica se um percurso é possível no grafo."""
+
     if not caminho:
         print("Percurso vazio.")
         return False
         
     for i in range(len(caminho) - 1):
         u, v = caminho[i], caminho[i + 1]
-        # Verifica se ambos os vértices existem e se a aresta u -> v existe
         if not (u in vertices and v in vertices and v in grafo[u]):
             print(f"Percurso inválido: não existe aresta '{u} -> {v}'")
             return False
@@ -127,7 +125,7 @@ def percurso_valido(grafo, vertices, caminho):
 
 
 def exibir_grafo(grafo, vertices):
-    """Exibe o grafo em formato de lista de adjacência."""
+
     print("\n=== Grafo (Lista de Adjacência) ===")
     if not vertices:
         print("O grafo está vazio.")
@@ -135,9 +133,9 @@ def exibir_grafo(grafo, vertices):
         print(f"{v} -> {grafo[v]}")
     print("==============================\n")
 
-# --- NOVA FUNÇÃO ADICIONADA ---
+
 def relatorio_completo_grafo(grafo, vertices):
-    """Exibe um relatório completo do grafo, incluindo vizinhos e graus."""
+   
     print("\n===== RELATÓRIO COMPLETO DO GRAFO =====")
     if not vertices:
         print("O grafo está vazio.")
@@ -146,12 +144,12 @@ def relatorio_completo_grafo(grafo, vertices):
 
     print("\n--- Lista de Adjacência (Todos os Vizinhos) ---")
     for v in vertices:
-        print(f"{v} -> {grafo[v]}") # Mostra cada vértice e seus vizinhos
+        print(f"{v} -> {grafo[v]}")
 
     print("\n--- Graus dos Vértices ---")
     for v in vertices:
         saida = len(grafo[v])
-        # Calcula o grau de entrada
+        
         entrada = 0
         for u in vertices:
             if v in grafo[u]:
@@ -161,10 +159,10 @@ def relatorio_completo_grafo(grafo, vertices):
         print(f"{v}: saída={saida}, entrada={entrada}, total={total}")
     
     print("\n======================================\n")
-# -------------------------------
 
 
-# --- MENU ATUALIZADO ---
+
+
 def menu():
     print("""
 ===== MENU GRAFO =====
@@ -181,7 +179,7 @@ def menu():
 0. Sair
 ======================
 """)
-# -----------------------
+
 
 
 def main():
@@ -239,10 +237,10 @@ def main():
             caminho = percurso_str.split()
             percurso_valido(grafo, vertices, caminho)
         
-        # --- NOVA OPÇÃO ADICIONADA ---
+        
         elif opcao == "10":
             relatorio_completo_grafo(grafo, vertices)
-        # -------------------------------
+        
 
         elif opcao == "0":
             print("Encerrando o programa...")
