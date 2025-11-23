@@ -108,6 +108,9 @@ def relatorio_completo_grafo(grafo):
         print(f"{v}: saída={saida}, entrada={entrada}, total={total}")
     print("\n======================================\n")
 
+# ===================================================================
+#                          BUSCA EM LARGURA (BFS)
+# ===================================================================
 def busca_em_largura(grafo, inicio):
     if inicio not in grafo:
         print(f"Vértice '{inicio}' não existe.")
@@ -158,6 +161,9 @@ def menor_caminho_bfs(grafo, origem, destino):
     print(f"Menor caminho entre '{origem}' e '{destino}': {caminho}")
     print(f"Tamanho do caminho: {len(caminho) - 1} arestas\n")
 
+# ===================================================================
+#                        BUSCA EM PROFUNDIDADE (DFS)
+# ===================================================================
 def busca_em_profundidade(grafo, inicio):
     if inicio not in grafo:
         print(f"Vértice '{inicio}' não existe.")
@@ -184,6 +190,9 @@ def busca_em_profundidade(grafo, inicio):
     print("--- DFS finalizada ---\n")
     return ordem
 
+# ===================================================================
+#              DETECTAR CICLOS USANDO DFS (RECURSIVO)
+# ===================================================================
 def dfs_detectar_ciclo(grafo):
     visitados = set()
     rec_stack = set()
@@ -211,6 +220,9 @@ def dfs_detectar_ciclo(grafo):
     print("--- DFS de Ciclos finalizada ---\n")
     return ciclo_detectado
 
+# ===================================================================
+#                            MENU
+# ===================================================================
 def menu():
     print("""
 ===== MENU GRAFO =====
@@ -237,15 +249,18 @@ def main():
     while True:
         menu()
         opcao = input("Escolha uma opção: ").strip()
+
         if opcao == "1":
             v = input("Digite o nome do vértice: ").strip()
             if v:
                 inserir_vertice(grafo, v)
             else:
                 print("Nome do vértice não pode ser vazio.")
+
         elif opcao == "2":
             v = input("Digite o vértice a remover: ").strip()
             remover_vertice(grafo, v)
+
         elif opcao == "3":
             o = input("Origem: ").strip()
             d = input("Destino: ").strip()
@@ -255,44 +270,57 @@ def main():
             tipo = input("É não direcionada? (s/n): ").strip().lower()
             nao_dir = tipo == "s"
             inserir_aresta(grafo, o, d, nao_dir)
+
         elif opcao == "4":
             o = input("Origem: ").strip()
             d = input("Destino: ").strip()
             tipo = input("É não direcionada? (s/n): ").strip().lower()
             nao_dir = tipo == "s"
             remover_aresta(grafo, o, d, nao_dir)
+
         elif opcao == "5":
             exibir_grafo(grafo)
+
         elif opcao == "6":
             grau_vertices(grafo)
+
         elif opcao == "7":
             o = input("Origem: ").strip()
             d = input("Destino: ").strip()
             existe_aresta(grafo, o, d)
+
         elif opcao == "8":
             v = input("Digite o vértice: ").strip()
             listar_vizinhos(grafo, v)
+
         elif opcao == "9":
             percurso_str = input("Digite o percurso separado por espaço (ex: A B C): ").strip()
             caminho = percurso_str.split()
             percurso_valido(grafo, caminho)
+
         elif opcao == "10":
             relatorio_completo_grafo(grafo)
+
         elif opcao == "11":
             inicio = input("Digite o vértice inicial: ").strip()
             busca_em_largura(grafo, inicio)
+
         elif opcao == "12":
             origem = input("Origem: ").strip()
             destino = input("Destino: ").strip()
             menor_caminho_bfs(grafo, origem, destino)
+
         elif opcao == "13":
             inicio = input("Digite o vértice inicial: ").strip()
             busca_em_profundidade(grafo, inicio)
+
         elif opcao == "14":
             dfs_detectar_ciclo(grafo)
+
         elif opcao == "0":
             print("Encerrando o programa...")
             break
+
         else:
             print("Opção inválida. Tente novamente.")
 
